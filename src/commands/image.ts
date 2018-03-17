@@ -68,7 +68,7 @@ export default (message: Message) => {
         const images = qwant.data.result.items
         const image = images[Math.floor(Math.random() * images.length)]
 
-        message.channel.send(`${image.media}\n(src: ${image.url})`)
+        message.channel.send(`${image.media}\n(via ${image.url})`)
       } else {
         message.channel.send(`No images found for ${query} 😅`)
       }
