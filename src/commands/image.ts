@@ -1,9 +1,5 @@
-// https://api.qwant.com/api/search/images?count=10&offset=1&q=cars
-
 import * as got from 'got'
 import {Message} from 'discord.js'
-
-const apiEndpoint = 'https://api.qwant.com/api/search/images'
 
 interface QwantItem {
   title: string
@@ -45,9 +41,11 @@ interface QwantResponse {
   }
 }
 
+const apiEndpoint = 'https://api.qwant.com/api/search/images'
+
 export default (message: Message) => {
   const query = message.content.substr(7) // .image [query]
-
+  
   if (query) {
     console.log('Getting random image for ' + query)
 

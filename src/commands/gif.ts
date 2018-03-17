@@ -1,6 +1,23 @@
-import axios from 'axios'
 import {Message} from 'discord.js'
-import * as qs from 'querystring'
+import * as got from 'got'
+
+interface GiphyGif {
+  type: string
+  id: string
+  slug: string
+  url: string
+  bitly_gif_url: string
+  bitly_url: string
+  embed_url: string
+  username: string
+  source: string
+  rating: string
+  // Lots of other stuff omitted because I am lazy
+}
+
+interface GiphyResponse {
+  data: GiphyGif[]
+}
 
 const apiKey = process.env.GIPHY_API_KEY
 const apiEndpoint = 'https://api.giphy.com/v1/gifs/search'
@@ -11,19 +28,26 @@ export default (message: Message) => {
   if (query) {
     console.log('Getting random GIF for ' + query)
 
-    const params = qs.stringify({
+    const params = {
       api_key: apiKey,
       q: query,
       limit: 50,
       offset: 0,
       rating: 'R',
       lang: 'en'
-    })
+    }
 
-    axios.get(`${apiEndpoint}?${params}`).then((response) => {
-      if (response.data.data && response.data.data.length > 0) {
-        const images = response.data.data
-        const image = images[Math.floor(Math.random() * images.length)]
+    got(apiEndpoint, {
+      json: true,
+      query: params,
+      retries: 5,
+      followRedirect: true
+    }).then((response) => {
+      const giphyResponse: GiphyResponse = response.body
+      const {data} = giphyResponse
+
+      if (data && data.length > 0) {
+        const image = data[Math.floor(Math.random() * data.length)]
 
         message.channel.send(image.url)
       } else {
