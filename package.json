@@ -1,0 +1,32 @@
+{
+  "name": "fbot",
+  "version": "1.0.0",
+  "description": "A bot for Discord",
+  "main": "build/fbot.js",
+  "author": "Evan Walsh <evan@massivedanger.com>",
+  "license": "Apache-2.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "postinstall": "yarn build",
+    "start": "node ./build/main.js",
+    "watch": "yarn build -w"
+  },
+  "devDependencies": {
+    "@types/got": "^7.1.7",
+    "@types/lodash": "^4.14.104",
+    "@types/node": "^9.4.7",
+    "massivedanger-tslint-config": "^1.0.0",
+    "tslint": "^5.9.1",
+    "typescript": "^2.7.2"
+  },
+  "dependencies": {
+    "@types/dotenv": "^4.0.2",
+    "axios": "^0.18.0",
+    "discord.js": "^11.3.2",
+    "dotenv": "^5.0.1",
+    "got": "^8.3.0",
+    "lodash": "^4.17.5",
+    "node-bing-api": "^3.2.2"
+  }
+}
